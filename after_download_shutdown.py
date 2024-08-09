@@ -27,12 +27,15 @@ def log():
 
 if __name__ == "__main__": 
     print("MONITORING TRAFFIC...")
-    SHUTDOWN_TIMER = 20 # seconds
-    shutdown_in = SHUTDOWN_TIMER
+    
+    SHUTDOWN_TIMER = 60 # seconds
     WRITE_TO_LOG = True
     STEP = 1 # seconds
+    
     shutdown_initiated = False
+    shutdown_in = SHUTDOWN_TIMER
     interface = "Ethernet"  # Replace with your network interface name
+
     while True:
         time.sleep(STEP)
         speed = get_network_usage(interface=interface, duration=1)
