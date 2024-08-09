@@ -1,6 +1,7 @@
 import psutil
 import time
 import os
+import datetime
 
 def get_network_usage(interface='eth0', duration=1):
     net_io_start = psutil.net_io_counters(pernic=True)[interface]
@@ -19,10 +20,16 @@ def get_network_usage(interface='eth0', duration=1):
 def shutdown():
     os.system("shutdown /s /t 0")
 
+def log():
+    now = datetime.datetime.now()
+    with open('log.txt', 'a') as f:
+        f.write(f"SHUTDOWN AT: {now.strftime('%H:%M:%S %d/%m/%Y')}\n")
+
 if __name__ == "__main__": 
     print("MONITORING TRAFFIC...")
-    SHUTDOWN_TIMER = 60 # seconds
+    SHUTDOWN_TIMER = 20 # seconds
     shutdown_in = SHUTDOWN_TIMER
+    WRITE_TO_LOG = True
     STEP = 1 # seconds
     shutdown_initiated = False
     interface = "Ethernet"  # Replace with your network interface name
@@ -40,6 +47,8 @@ if __name__ == "__main__":
                 print("Shutdown in:", shutdown_in, 'seconds')
 
             if shutdown_in <= 0:
+                if WRITE_TO_LOG:
+                    log()
                 shutdown()
         else:
             if shutdown_initiated:
