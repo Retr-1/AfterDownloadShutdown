@@ -3,6 +3,13 @@ import time
 import os
 import datetime
 
+"""
+TODO:
+1. remove time.sleep, use get_network_usage(duration=STEP) instead
+2. add argument parser for parameters
+3. target specific application like steam, instead of checking all internet traffic on PC
+"""
+
 def get_network_usage(interface='eth0', duration=1):
     net_io_start = psutil.net_io_counters(pernic=True)[interface]
     start_bytes = net_io_start.bytes_recv
